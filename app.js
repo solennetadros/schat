@@ -38,6 +38,10 @@ function incomingSocketHandler(socket){
 		io.emit('latest message', dataFromServer);
 	});
 
+	socket.on('new user', function(userName){
+		io.emit("new user server response", userName );
+	});
+
 	socket.on('disconnect', function(){
 		console.log("User has disconnected");
 	});

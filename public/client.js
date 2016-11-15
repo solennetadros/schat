@@ -11,6 +11,10 @@ socket.on('latest message', function(data){
 	$('#messages').append($('<li>').text(data.userName + ": " + data.message));
 })
 
+socket.on('new user server response', function(userName){
+	$('#messages').append($('<li>').text(userName + " has joined the chat."));
+})
+
 myFunction();
 
 function myFunction() {
@@ -19,7 +23,7 @@ function myFunction() {
     if (person != null) {
         $('#messages').append($('<li>').text("You are now " + person));
         userName = person;
-        submitFired();
+				socket.emit('new user', userName);
     }
 }
 
@@ -31,7 +35,6 @@ function submitFired(){
 	var dataFromClient = {
 		userName : userName,
 		msgText : $('#m').val()
-		
 	}
 	socket.emit('chat message', dataFromClient);
 	//userName;
